@@ -1,26 +1,49 @@
-hbase-site.xml：
+**添加hbase-site.xml：**
+
+```
 <property>
                 <name>hbase.coprocessor.master.classes</name>
                 <value>com.denovo.hbaseObserver.Hbase2EsObserver</value>
 </property>
+```
 
-hdfs一份jar包：
+
+
+**hdfs一份jar包：**
+
+```
 hdfs dfs -put ~/IdeaProjects/Hbase_ES/target/Hbase_ES-1.0-SNAPSHOT-jar-with-dependencies.jar /user/user/
+```
 
-Hbase安装目录下lib中一份：
+**Hbase安装目录下lib中一份：**
+
+```
 cp ~/IdeaProjects/Hbase_ES/target/Hbase_ES-1.0-SNAPSHOT-jar-with-dependencies.jar ~/apps/hbase-1.2.6/lib/
+```
 
-例子：
+
+
+**例子：**
+
+```
 create 'Student','Sno','Sname','Ssex','Sage'
 
 disable 'Student'
+```
 
 这里注意中间的"|"，后面逗号分割的是参数
+
+```
 alter 'Student' , METHOD =>'table_att','coprocessor'=>'hdfs:///user/user/Hbase_ES-1.0-SNAPSHOT-jar-with-dependencies.jar|com.denovo.hbaseObserver.Hbase2EsObserver|1001|cluster.name=elasticsearch,indexType=type,indexName=index,es_port=9300,es_host=localhost'
 
 enable 'Student'
+```
 
-数据例子：
+
+
+**数据例子：**
+
+```
 put 'Student','student1','Sno','1'
 put 'Student','student1','Sname','s1'
 put 'Student','student1','Ssex','male'
@@ -41,4 +64,5 @@ put 'Student','student5','Sno','5'
 put 'Student','student5','Sname','s5'
 put 'Student','student5','Ssex','male'
 put 'Student','student5','Sage','66'
+```
 
